@@ -29,7 +29,7 @@ const App = () => {
   useEffect(passwordGenerator, [length, numberAllowed, charAllowed]);
   return (
     <>
-      <div className="max-w-md border-2 mt-8 text-center m-auto flex flex-col text-orange-400 rounded-2xl justify-evenly items-center  p-4 bg-gray-800">
+      <div className="max-w-md border-2 mt-8 text-center m-auto flex flex-col text-yellow-400 rounded-2xl justify-evenly items-center  p-4 bg-gray-800">
         <h1 className="text-3xl font-bold  text-white">Password Generator</h1>
         <br />
         <div>
@@ -39,9 +39,14 @@ const App = () => {
             value={password}
             placeholder="Password"
             ref={passwordRef}
-            className="bg-white max-w-full p-2.5 "
+            className="bg-white max-w-full p-2.5 text-indigo-700"
           />
-          <button   onClick={copyPassword} className="bg-indigo-600 text-white p-2.5">Copy</button>
+          <button
+            onClick={copyPassword}
+            className="bg-indigo-600 text-white p-2.5"
+          >
+            Copy
+          </button>
         </div>
         <div className="flex gap-30 m-4">
           <div>
@@ -54,11 +59,12 @@ const App = () => {
               min={6}
               className="max-w-max cursor-pointer"
             />
-            <h2>Length:{length}</h2>
+            <h2>Length: {length}</h2>
           </div>
           <div>
-            <label>Numbers</label>
+            <label>Numbers </label>
             <input
+              className="accent-yellow-300 "
               type="checkbox"
               defaultChecked={numberAllowed}
               onChange={() => {
@@ -66,8 +72,9 @@ const App = () => {
               }}
             />
             <br />
-            <label>Character</label>
+            <label>Character   </label>
             <input
+              className="accent-yellow-300 "
               type="checkbox"
               defaultChecked={charAllowed}
               onChange={() => {
