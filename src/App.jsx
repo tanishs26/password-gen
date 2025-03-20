@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 
 const App = () => {
@@ -6,6 +6,11 @@ const App = () => {
   const [length, setLength] = useState(8);
   const [numberAllowed, setNumberAllowed] = useState(true);
   const [charAllowed, setCharAllowed] = useState(false);
+  const passwordRef = useRef(null);
+  const copyPassword = () => {
+    passwordRef.current?.select();
+    window.navigator.clipboard.writeText(password);
+  };
 
   const passwordGenerator = useCallback(() => {
     let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -33,9 +38,10 @@ const App = () => {
             readOnly
             value={password}
             placeholder="Password"
+            ref={passwordRef}
             className="bg-white max-w-full p-2.5 "
           />
-          <button className="bg-indigo-600 text-white p-2.5">Copy</button>
+          <button   onClick={copyPassword} className="bg-indigo-600 text-white p-2.5">Copy</button>
         </div>
         <div className="flex gap-30 m-4">
           <div>
@@ -64,7 +70,9 @@ const App = () => {
             <input
               type="checkbox"
               defaultChecked={charAllowed}
-              onChange={()=>{setCharAllowed((prev) => !prev)}}
+              onChange={() => {
+                setCharAllowed((prev) => !prev);
+              }}
             />
           </div>
         </div>
