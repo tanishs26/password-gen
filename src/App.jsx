@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
 const App = () => {
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState("");
   const [length, setLength] = useState(8);
   const [numberAllowed, setNumberAllowed] = useState(true);
   const [charAllowed, setCharAllowed] = useState(false);
 
+  const passwordGenerator = useCallback(() => {
+    let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let pass = "";
+    if (numberAllowed) str += "0123456789";
+    if (charAllowed) str += "~!@#$%^&*_+-=*/`";
+    for (let i = 1; i <= length; i++) {
+      let char = Math.floor(Math.random() * str.length + 1);
+      pass += str.charAt(char);
+    }
+    console.log(pass);
+
+    setPassword(pass);
+  }, [length, numberAllowed, charAllowed, setPassword]);
+
+  useEffect(passwordGenerator, [length, numberAllowed, charAllowed]);
   return (
     <>
       <div className="max-w-md border-2 mt-8 text-center m-auto flex flex-col text-orange-400 rounded-2xl justify-evenly items-center  p-4 bg-gray-800">
@@ -37,10 +52,20 @@ const App = () => {
           </div>
           <div>
             <label>Numbers</label>
-            <input type="checkbox" defaultChecked={numberAllowed} />
+            <input
+              type="checkbox"
+              defaultChecked={numberAllowed}
+              onChange={() => {
+                setNumberAllowed((prev) => !prev);
+              }}
+            />
             <br />
             <label>Character</label>
-            <input type="checkbox" defaultChecked={charAllowed} />
+            <input
+              type="checkbox"
+              defaultChecked={charAllowed}
+              onChange={()=>{setCharAllowed((prev) => !prev)}}
+            />
           </div>
         </div>
       </div>
